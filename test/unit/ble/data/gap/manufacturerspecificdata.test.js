@@ -3,15 +3,15 @@
  * We believe in an open Internet of Things
  */
 
-var manufacturerspecificdata = 
+var manufacturerspecificdata =
         require("../../../../../lib/ble/data/gap/manufacturerspecificdata.js");
-var assert = require('assert'); 
- 
+var assert = require('assert');
+
 // Inputs for the scenario
 var INPUT_DATA_COMPANY_ONLY = '0800';
-var INPUT_DATA_IBEACON_ESTIMOTE = 
+var INPUT_DATA_IBEACON_ESTIMOTE =
                       '4c000215b9407f30f5f8466eaff925556b57fe6d294c903974';
-var INPUT_DATA_IBEACON_UNKNOWN = 
+var INPUT_DATA_IBEACON_UNKNOWN =
                       '4c000215000000000000000000000000000000001234567800';
 var INPUT_DATA_AIRDROP = '4c0005120000000000000000011bc238fa0000000000';
 var INPUT_DATA_AIRPODS = '4c00071901022021880f00000049bcba4477206b0447472c771e53bbeb';
@@ -139,111 +139,135 @@ var EXPECTED_DATA_PUCKYACTIVE = {
   magneticFieldZ: 1250
 };
 
+// Stanley Black and Decker
+const SBD_TAG_0_INPUT = 'FE00FEC472DC26D5EC0102810000AC00000000007514'.toLowerCase();
+const SBD_TAG_0_EXPECTED = {
+
+};
+const SBD_DRILL_0_INPUT = 'FE00FE582FB6C350C501038C2808C9A10100000000FF'.toLowerCase();
+const SBD_DRILL_0_EXPECTED = {
+
+};
+const SBD_IMPACT_0_INPUT = '';
+const SBD_IMPACT_0_EXPECTED = {
+
+};
+
+
+
 describe('ble data manufacturerspecificdata', function() {
 
   // Test the process function
   it('should convert ble advertiser data to a company manufacturer specific \
      data', function() {
-    assert.deepEqual(manufacturerspecificdata.process(INPUT_DATA_COMPANY_ONLY), 
+    assert.deepEqual(manufacturerspecificdata.process(INPUT_DATA_COMPANY_ONLY),
                      EXPECTED_DATA_COMPANY_ONLY);
   });
-  
+
   it('should convert ble advertiser data to apple and iBeacon manufacturer \
      specificdata', function() {
     assert.deepEqual(manufacturerspecificdata.process(
-                     INPUT_DATA_IBEACON_ESTIMOTE).iBeacon, 
+                     INPUT_DATA_IBEACON_ESTIMOTE).iBeacon,
                      EXPECTED_DATA_IBEACON_ESTIMOTE);
   });
 
   it('should convert ble advertiser data for unknown iBeacon', function() {
     assert.deepEqual(manufacturerspecificdata.process(
-                     INPUT_DATA_IBEACON_UNKNOWN).iBeacon, 
+                     INPUT_DATA_IBEACON_UNKNOWN).iBeacon,
                      EXPECTED_DATA_IBEACON_UNKNOWN);
   });
 
   it('should convert ble advertiser data for AirDrop', function() {
     assert.deepEqual(manufacturerspecificdata.process(
-                     INPUT_DATA_AIRDROP).airdrop, 
+                     INPUT_DATA_AIRDROP).airdrop,
                      EXPECTED_DATA_AIRDROP);
   });
 
   it('should convert ble advertiser data for AirPods', function() {
     assert.deepEqual(manufacturerspecificdata.process(
-                     INPUT_DATA_AIRPODS).airpods, 
+                     INPUT_DATA_AIRPODS).airpods,
                      EXPECTED_DATA_AIRPODS);
   });
 
   it('should convert ble advertiser data for Apple service 0x08', function() {
     assert.deepEqual(manufacturerspecificdata.process(
-                     INPUT_DATA_SERVICE_08).service, 
+                     INPUT_DATA_SERVICE_08).service,
                      EXPECTED_DATA_SERVICE_08);
   });
 
   it('should convert ble advertiser data for AirPlay destination', function() {
     assert.deepEqual(manufacturerspecificdata.process(
-                     INPUT_DATA_AIRPLAY_DESTINATION).airplay, 
+                     INPUT_DATA_AIRPLAY_DESTINATION).airplay,
                      EXPECTED_DATA_AIRPLAY_DESTINATION);
   });
 
   it('should convert ble advertiser data for AirPlay source', function() {
     assert.deepEqual(manufacturerspecificdata.process(
-                     INPUT_DATA_AIRPLAY_SOURCE).airplay, 
+                     INPUT_DATA_AIRPLAY_SOURCE).airplay,
                      EXPECTED_DATA_AIRPLAY_SOURCE);
   });
 
   it('should convert ble advertiser data for Apple handoff', function() {
     assert.deepEqual(manufacturerspecificdata.process(
-                     INPUT_DATA_HANDOFF).handoff, 
+                     INPUT_DATA_HANDOFF).handoff,
                      EXPECTED_DATA_HANDOFF);
   });
 
   it('should convert ble advertiser data for Apple nearby', function() {
     assert.deepEqual(manufacturerspecificdata.process(
-                     INPUT_DATA_NEARBY).nearby, 
+                     INPUT_DATA_NEARBY).nearby,
                      EXPECTED_DATA_NEARBY);
   });
 
   it('should convert ble advertiser data for two Apple services', function() {
     assert.deepEqual(manufacturerspecificdata.process(
-                     INPUT_DATA_HANDOFF_AND_NEARBY).nearby, 
+                     INPUT_DATA_HANDOFF_AND_NEARBY).nearby,
                      EXPECTED_DATA_HANDOFF_AND_NEARBY);
   });
 
   it('should convert ble advertiser data for AltBeacon', function() {
     assert.deepEqual(manufacturerspecificdata.process(
-                     INPUT_DATA_ALTBEACON).altBeacon, 
+                     INPUT_DATA_ALTBEACON).altBeacon,
                      EXPECTED_DATA_ALTBEACON);
   });
 
   it('should convert ble advertiser data to StickNFind Beacon Single \
      specificdata', function() {
     assert.deepEqual(manufacturerspecificdata.process(
-                     INPUT_DATA_SNF_SINGLE).snfBeacon, 
+                     INPUT_DATA_SNF_SINGLE).snfBeacon,
                      EXPECTED_DATA_SNF_SINGLE);
   });
 
   it('should convert ble advertiser data to StickNSense Motion \
      specificdata', function() {
     assert.deepEqual(manufacturerspecificdata.process(
-                     INPUT_DATA_SNS_MOTION).snfBeacon, 
+                     INPUT_DATA_SNS_MOTION).snfBeacon,
                      EXPECTED_DATA_SNS_MOTION);
   });
 
   it('should convert ble advertiser data for Motsai', function() {
     assert.deepEqual(manufacturerspecificdata.process(
-                     INPUT_DATA_MOTSAI).sensors, 
+                     INPUT_DATA_MOTSAI).sensors,
                      EXPECTED_DATA_MOTSAI);
   });
 
   it('should convert ble advertiser data for NorBLE', function() {
     assert.deepEqual(manufacturerspecificdata.process(
-                     INPUT_DATA_NORBLE).norble, 
+                     INPUT_DATA_NORBLE).norble,
                      EXPECTED_DATA_NORBLE);
   });
 
   it('should convert ble advertiser data for puckyActive', function() {
     assert.deepEqual(manufacturerspecificdata.process(
-                     INPUT_DATA_PUCKYACTIVE).puckyActive, 
+                     INPUT_DATA_PUCKYACTIVE).puckyActive,
                      EXPECTED_DATA_PUCKYACTIVE);
   });
+
+  it('SBD TAG 0', function() {
+    const SBDDrill = manufacturerspecificdata.process(SBD_TAG_0_INPUT);
+    console.log('SBD TAG 0 SBD_TAG_0_INPUT=', JSON.stringify(SBD_TAG_0_INPUT, null, 2));
+    console.log('SBD TAG 0', JSON.stringify(SBDDrill, null, 2));
+    assert.deepEqual(SBDDrill.tag, SBD_TAG_0_EXPECTED);
+  });
+
 });
